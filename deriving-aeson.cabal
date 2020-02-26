@@ -1,0 +1,29 @@
+cabal-version:       2.4
+name:                deriving-aeson
+version:             0
+synopsis:            Type driven generic aeson instance customisation
+description:         This package provides a newtype wrapper with
+  FromJSON/ToJSON instances customisable via a phantom type parameter.
+  The instances can be rendered to the original type using DerivingVia.
+bug-reports:         https://github.com/fumieval/deriving-aeson
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              Fumiaki Kinoshita
+maintainer:          fumiexcel@gmail.com
+copyright:           Copyright (c) 2020 Fumiaki Kinoshita
+category:            JSON, Generics
+extra-source-files:  CHANGELOG.md
+
+library
+  exposed-modules:     Deriving.Aeson
+  build-depends:       base >= 4.12 && <5, aeson
+  hs-source-dirs: src
+  default-language:    Haskell2010
+  ghc-options: -Wall
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: test.hs
+  build-depends: base, aeson, deriving-aeson, bytestring
+  hs-source-dirs: tests
+  default-language:    Haskell2010

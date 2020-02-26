@@ -1,0 +1,6 @@
+.stack-work/
+*~
+.ghc.environment.*
+dist-newstyle/
+tags
+TAGS
