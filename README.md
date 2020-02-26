@@ -3,6 +3,7 @@ deriving-aeson
 
 [![Hackage](https://img.shields.io/hackage/v/deriving-aeson.svg)](https://hackage.haskell.org/package/deriving-aeson)
 ![Haskell CI](https://github.com/fumieval/deriving-aeson/workflows/Haskell%20CI/badge.svg)
+[![Discord](https://img.shields.io/discord/664807830116892674?color=%237095ec&label=Discord&style=plastic)](https://discord.gg/DG93Tgs)
 
 This package provides a newtype wrapper where you can customise
 [aeson](https://hackage,haskell.org/package/aeson)'s generic methods using a
