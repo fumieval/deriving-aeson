@@ -4,7 +4,9 @@ module Main where
 
 import Data.Aeson
 import Deriving.Aeson
+import Deriving.Aeson.Stock
 import qualified Data.ByteString.Lazy.Char8 as BL
+
 
 data User = User
   { userId :: Int
@@ -14,7 +16,14 @@ data User = User
   deriving (FromJSON, ToJSON)
   via CustomJSON '[OmitNothingFields, FieldLabelModifier (StripPrefix "user", CamelToSnake)] User
 
+data Foo = Foo { fooFoo :: Int, fooBar :: Int }
+  deriving Generic
+  deriving (FromJSON, ToJSON)
+  via Prefixed "foo" Foo
+
 testData :: [User]
 testData = [User 42 "Alice" Nothing, User 43 "Bob" (Just "xyz")]
 
-main = BL.putStrLn $ encode testData
+main = do
+  BL.putStrLn $ encode testData
+  BL.putStrLn $ encode $ Foo 0 1
