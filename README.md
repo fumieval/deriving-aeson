@@ -32,9 +32,36 @@ main = BL.putStrLn $ encode testData
 
 `Deriving.Aeson.Stock` contains some aliases for even less boilerplates.
 
-* `Prefixed str` = `FieldLabelModifier (StripPrefix str)`
-* `PrefixedSnake str` = `FieldLabelModifier (StripPrefix str, CamelToSnake)`
-* `Snake` = `FieldLabelModifier (StripPrefix str, CamelToSnake)`
+* `Prefixed str` = `CustomJSON '[FieldLabelModifier (StripPrefix str)]`
+* `PrefixedSnake str` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
+* `Snake` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
+
+How it works
+----
+
+The wrapper type has a phantom type parameter `t`, a type-level builder of an [Option](http://hackage.haskell.org/package/aeson-1.4.6.0/docs/Data-Aeson.html#t:Options).
+Type-level primitives are reduced to one `Option` by the `AesonOptions` class.
+
+```haskell
+newtype CustomJSON t a = CustomJSON { unCustomJSON :: a }
+
+class AesonOptions xs where
+  aesonOptions :: Options
+
+instance AesonOptions xs => AesonOptions (OmitNothingFields ': xs) where
+  aesonOptions = (aesonOptions @xs) { omitNothingFields = True }
+
+...
+```
+
+You can use any (static) function for name modification by adding an instance of `StringModifier`.
+
+```haskell
+data ToLower
+instance StringModifier ToLower where
+  getStringModifier "" = ""
+  getStringModifier (c : xs) = toLower c : xs
+```
 
 Previous studies
 ----
