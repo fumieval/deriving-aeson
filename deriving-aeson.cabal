@@ -15,7 +15,9 @@ category:            JSON, Generics
 extra-source-files:  CHANGELOG.md, README.md
 
 library
-  exposed-modules:     Deriving.Aeson
+  exposed-modules:
+    Deriving.Aeson
+    Deriving.Aeson.Stock
   build-depends:       base >= 4.12 && <5, aeson
   hs-source-dirs: src
   default-language:    Haskell2010

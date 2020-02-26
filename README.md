@@ -29,6 +29,12 @@ main = BL.putStrLn $ encode testData
 -- [{"name":"Alice","id":42},{"api_token":"xyz","name":"Bob","id":43}]
 ```
 
+`Deriving.Aeson.Stock` contains some aliases for even less boilerplates.
+
+* `Prefixed str` = `FieldLabelModifier (StripPrefix str)`
+* `PrefixedSnake str` = `FieldLabelModifier (StripPrefix str, CamelToSnake)`
+* `Snake` = `FieldLabelModifier (StripPrefix str, CamelToSnake)`
+
 Previous studies
 ----
 
