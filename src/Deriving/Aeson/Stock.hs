@@ -1,6 +1,13 @@
 {-# LANGUAGE DataKinds #-}
 
-module Deriving.Aeson.Stock (Prefixed, PrefixedSnake, Snake) where
+module Deriving.Aeson.Stock
+  ( Prefixed
+  , PrefixedSnake
+  , Snake
+  -- * Reexports
+  , FromJSON
+  , ToJSON
+  , Generic) where
 
 import Deriving.Aeson
 
