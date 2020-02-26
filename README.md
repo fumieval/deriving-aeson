@@ -11,8 +11,8 @@ type-level interface, which synergises well with DerivingVia.
 ```haskell
 {-# LANGUAGE DerivingVia, DataKinds, DeriveGeneric #-}
 import Data.Aeson
-import qualified Data.ByteString.Lazy.Char8 as BL
 import Deriving.Aeson
+import qualified Data.ByteString.Lazy.Char8 as BL
 
 data User = User
   { userId :: Int
@@ -25,12 +25,12 @@ data User = User
 testData :: [User]
 testData = [User 42 "Alice" Nothing, User 43 "Bob" (Just "xyz")]
 
-main = BL.putStrLn $ encode $ testData
+main = BL.putStrLn $ encode testData
 -- [{"name":"Alice","id":42},{"api_token":"xyz","name":"Bob","id":43}]
 ```
 
 Previous studies
 ----
 
-* https://gist.github.com/konn/27c00f784dd883ec2b90eab8bc84a81d
-* https://gist.github.com/fumieval/5c89205d418d5f9cafac801afbe94969
+* [Type-driven safe derivation of ToJSON and FromJSON, using DerivingVia in GHC 8.6 and some type-level hacks](https://gist.github.com/konn/27c00f784dd883ec2b90eab8bc84a81d)
+* [Strip prefices from JSON representation](https://gist.github.com/fumieval/5c89205d418d5f9cafac801afbe94969)

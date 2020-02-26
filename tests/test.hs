@@ -3,8 +3,8 @@
 module Main where
 
 import Data.Aeson
-import qualified Data.ByteString.Lazy.Char8 as BL
 import Deriving.Aeson
+import qualified Data.ByteString.Lazy.Char8 as BL
 
 data User = User
   { userId :: Int
@@ -17,4 +17,4 @@ data User = User
 testData :: [User]
 testData = [User 42 "Alice" Nothing, User 43 "Bob" (Just "xyz")]
 
-main = BL.putStrLn $ encode $ testData
+main = BL.putStrLn $ encode testData
