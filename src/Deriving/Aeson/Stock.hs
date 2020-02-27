@@ -6,6 +6,7 @@ module Deriving.Aeson.Stock
   , PrefixedSnake
   , Snake
   -- * Reexports
+  , CustomJSON(..)
   , FromJSON
   , ToJSON
   , Generic) where
