@@ -45,9 +45,11 @@ instance (AesonOptions t, Generic a, GFromJSON Zero (Rep a)) => FromJSON (Custom
   parseJSON = (coerce `asTypeOf` fmap CustomJSON) . genericParseJSON (aesonOptions @t)
   {-# INLINE parseJSON #-}
 
-instance (AesonOptions t, Generic a, GToJSON Zero (Rep a)) => ToJSON (CustomJSON t a) where
+instance (AesonOptions t, Generic a, GToJSON Zero (Rep a), GToEncoding Zero (Rep a)) => ToJSON (CustomJSON t a) where
   toJSON = genericToJSON (aesonOptions @t) . unCustomJSON
   {-# INLINE toJSON #-}
+  toEncoding = genericToEncoding (aesonOptions @t) . unCustomJSON
+  {-# INLINE toEncoding #-}
 
 -- | Function applied to field labels. Handy for removing common record prefixes for example.
 data FieldLabelModifier t
