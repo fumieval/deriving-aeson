@@ -13,7 +13,7 @@
 module Deriving.Aeson
   ( CustomJSON(..)
   , FieldLabelModifier
-  , ConstrctorTagModifier
+  , ConstructorTagModifier
   , OmitNothingFields
   , TagSingleConstructors
   , NoAllNullaryToStringTag
@@ -60,7 +60,7 @@ instance (AesonOptions t, Generic a, GToJSON Zero (Rep a), GToEncoding Zero (Rep
 data FieldLabelModifier t
 
 -- | Function applied to constructor tags which could be handy for lower-casing them for example.
-data ConstrctorTagModifier t
+data ConstructorTagModifier t
 
 -- | Record fields with a Nothing value will be omitted from the resulting object.
 data OmitNothingFields
@@ -115,7 +115,7 @@ instance AesonOptions xs => AesonOptions (OmitNothingFields ': xs) where
 instance (StringModifier f, AesonOptions xs) => AesonOptions (FieldLabelModifier f ': xs) where
   aesonOptions = (aesonOptions @xs) { fieldLabelModifier = getStringModifier @f }
 
-instance (StringModifier f, AesonOptions xs) => AesonOptions (ConstrctorTagModifier f ': xs) where
+instance (StringModifier f, AesonOptions xs) => AesonOptions (ConstructorTagModifier f ': xs) where
   aesonOptions = (aesonOptions @xs) { constructorTagModifier = getStringModifier @f }
 
 instance AesonOptions xs => AesonOptions (TagSingleConstructors ': xs) where
