@@ -17,6 +17,11 @@ module Deriving.Aeson
   , OmitNothingFields
   , TagSingleConstructors
   , NoAllNullaryToStringTag
+  -- * Sum encoding
+  , SumTaggedObject
+  , SumUntaggedValue
+  , SumObjectWithSingleField
+  , SumTwoElemArray
   -- * Name modifiers
   , StripPrefix
   , CamelToKebab
@@ -92,6 +97,11 @@ instance StringModifier CamelToKebab where
 instance StringModifier CamelToSnake where
   getStringModifier = camelTo2 '_'
 
+data SumTaggedObject t c
+data SumUntaggedValue
+data SumObjectWithSingleField
+data SumTwoElemArray
+
 -- | Reify 'Options' from a type-level list
 class AesonOptions xs where
   aesonOptions :: Options
@@ -113,3 +123,15 @@ instance AesonOptions xs => AesonOptions (TagSingleConstructors ': xs) where
 
 instance AesonOptions xs => AesonOptions (NoAllNullaryToStringTag ': xs) where
   aesonOptions = (aesonOptions @xs) { allNullaryToStringTag = False }
+
+instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumTaggedObject t c ': xs) where
+  aesonOptions = (aesonOptions @xs) { sumEncoding = TaggedObject (symbolVal (Proxy @ t)) (symbolVal (Proxy @ t)) }
+
+instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumUntaggedValue ': xs) where
+  aesonOptions = (aesonOptions @xs) { sumEncoding = UntaggedValue }
+
+instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumObjectWithSingleField ': xs) where
+  aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
+
+instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumTwoElemArray ': xs) where
+  aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
