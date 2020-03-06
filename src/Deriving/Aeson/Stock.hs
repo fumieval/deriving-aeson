@@ -5,6 +5,7 @@ module Deriving.Aeson.Stock
   ( Prefixed
   , PrefixedSnake
   , Snake
+  , Vanilla
   -- * Reexports
   , CustomJSON(..)
   , FromJSON
@@ -21,3 +22,6 @@ type PrefixedSnake str = CustomJSON '[FieldLabelModifier (StripPrefix str, Camel
 
 -- | Convert from CamelCase to snake_case
 type Snake = CustomJSON '[FieldLabelModifier CamelToSnake]
+
+-- | No customisation
+type Vanilla = CustomJSON '[]
