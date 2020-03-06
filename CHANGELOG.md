@@ -1,5 +1,12 @@
 # Revision history for deriving-aeson
 
+## 0.2
+
+* Added `Sum*` for changing the encoding of variants
+* Added `Vanilla = CustomJSON '[]`
+* Renamed `ContructorTagModifier` to `ConstructorTagModifier`
+* Added `toEncoding` implementation to `CustomJSON`
+
 ## 0.1.2
 
 * Reexported `CustomJSON(..)` from `Deriving.Aeson.Stock`

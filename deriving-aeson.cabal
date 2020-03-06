@@ -1,6 +1,6 @@
 cabal-version:       2.4
 name:                deriving-aeson
-version:             0.1.2
+version:             0.2
 synopsis:            Type driven generic aeson instance customisation
 description:         This package provides a newtype wrapper with
   FromJSON/ToJSON instances customisable via a phantom type parameter.
@@ -13,6 +13,10 @@ maintainer:          fumiexcel@gmail.com
 copyright:           Copyright (c) 2020 Fumiaki Kinoshita
 category:            JSON, Generics
 extra-source-files:  CHANGELOG.md, README.md
+
+source-repository head
+  type: git
+  location: https://github.com/fumieval/deriving-aeson.git
 
 library
   exposed-modules:
