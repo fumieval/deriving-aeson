@@ -127,11 +127,11 @@ instance AesonOptions xs => AesonOptions (NoAllNullaryToStringTag ': xs) where
 instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumTaggedObject t c ': xs) where
   aesonOptions = (aesonOptions @xs) { sumEncoding = TaggedObject (symbolVal (Proxy @ t)) (symbolVal (Proxy @ t)) }
 
-instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumUntaggedValue ': xs) where
+instance (AesonOptions xs) => AesonOptions (SumUntaggedValue ': xs) where
   aesonOptions = (aesonOptions @xs) { sumEncoding = UntaggedValue }
 
-instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumObjectWithSingleField ': xs) where
+instance (AesonOptions xs) => AesonOptions (SumObjectWithSingleField ': xs) where
   aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
 
-instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumTwoElemArray ': xs) where
+instance (AesonOptions xs) => AesonOptions (SumTwoElemArray ': xs) where
   aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
