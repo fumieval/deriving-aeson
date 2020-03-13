@@ -1,6 +1,6 @@
 cabal-version:       2.4
 name:                deriving-aeson
-version:             0.2
+version:             0.2.1
 synopsis:            Type driven generic aeson instance customisation
 description:         This package provides a newtype wrapper with
   FromJSON/ToJSON instances customisable via a phantom type parameter.
@@ -25,7 +25,7 @@ library
   build-depends:       base >= 4.12 && <5, aeson >= 1.3 && <1.5
   hs-source-dirs: src
   default-language:    Haskell2010
-  ghc-options: -Wall
+  ghc-options: -Wall -Wcompat
 
 test-suite test
   type: exitcode-stdio-1.0

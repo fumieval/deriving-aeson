@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.1
+
+* Remove redundant type variables from `Sum*`
+
 ## 0.2
 
 * Added `Sum*` for changing the encoding of variants
