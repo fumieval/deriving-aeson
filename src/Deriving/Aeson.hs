@@ -17,6 +17,7 @@ module Deriving.Aeson
   , OmitNothingFields
   , TagSingleConstructors
   , NoAllNullaryToStringTag
+  , UnwrapUnaryRecords
   -- * Sum encoding
   , SumTaggedObject
   , SumUntaggedValue
@@ -71,6 +72,8 @@ data TagSingleConstructors
 -- | the encoding will always follow the 'sumEncoding'.
 data NoAllNullaryToStringTag
 
+data UnwrapUnaryRecords
+
 -- | Strip prefix @t@. If it doesn't have the prefix, keep it as-is.
 data StripPrefix t
 
@@ -108,6 +111,9 @@ class AesonOptions xs where
 
 instance AesonOptions '[] where
   aesonOptions = defaultOptions
+
+instance AesonOptions xs => AesonOptions (UnwrapUnaryRecords ': xs) where
+  aesonOptions = (aesonOptions @xs) { unwrapUnaryRecords = True }
 
 instance AesonOptions xs => AesonOptions (OmitNothingFields ': xs) where
   aesonOptions = (aesonOptions @xs) { omitNothingFields = True }
