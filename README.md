@@ -5,6 +5,8 @@ deriving-aeson
 ![Haskell CI](https://github.com/fumieval/deriving-aeson/workflows/Haskell%20CI/badge.svg)
 [![Discord](https://img.shields.io/discord/664807830116892674?color=%237095ec&label=Discord&style=plastic)](https://discord.gg/DG93Tgs)
 
+![logo](https://github.com/fumieval/deriving-aeson/blob/master/logo/logo.png?raw=true)
+
 This package provides a newtype wrapper where you can customise
 [aeson](https://hackage.haskell.org/package/aeson)'s generic methods using a
 type-level interface, which synergises well with DerivingVia.
