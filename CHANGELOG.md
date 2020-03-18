@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.2
+
+* Added `UnwrapUnaryRecords`
+
 ## 0.2.1
 
 * Remove redundant type variables from `Sum*`
