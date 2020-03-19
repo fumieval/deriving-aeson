@@ -35,7 +35,9 @@ main = BL.putStrLn $ encode testData
 `Deriving.Aeson.Stock` contains some aliases for even less boilerplates.
 
 * `Prefixed str` = `CustomJSON '[FieldLabelModifier (StripPrefix str)]`
+* `Prefixed' str` = `CustomJSON '[FieldLabelModifier (StripStrictPrefix str)]`
 * `PrefixedSnake str` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
+* `PrefixedSnake str` = `CustomJSON '[FieldLabelModifier (StripStrictPrefix str, CamelToSnake)]`
 * `Snake` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
 * `Vanilla` = `CustomJSON '[]`
 
