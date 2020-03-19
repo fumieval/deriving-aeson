@@ -25,6 +25,7 @@ module Deriving.Aeson
   , SumTwoElemArray
   -- * Name modifiers
   , StripPrefix
+  , StripStrictPrefix
   , CamelToKebab
   , CamelToSnake
   -- * Interface
@@ -36,10 +37,12 @@ module Deriving.Aeson
   , Generic
   )where
 
+import Control.Monad (guard)
 import Data.Aeson
 import Data.Coerce
+import Data.Char (isLower)
 import Data.List (stripPrefix)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, listToMaybe)
 import Data.Proxy
 import GHC.Generics
 import GHC.TypeLits
@@ -77,6 +80,10 @@ data UnwrapUnaryRecords
 -- | Strip prefix @t@. If it doesn't have the prefix, keep it as-is.
 data StripPrefix t
 
+-- | Strip strict prefix @t@. a is b's strict prefix iff a is b's prefix and the result string is empty or its
+-- first character is not lower case alphabetic
+data StripStrictPrefix t
+
 -- | CamelCase to snake_case
 data CamelToSnake
 
@@ -89,6 +96,15 @@ class StringModifier t where
 
 instance KnownSymbol k => StringModifier (StripPrefix k) where
   getStringModifier = fromMaybe <*> stripPrefix (symbolVal (Proxy @k))
+
+instance KnownSymbol k => StringModifier (StripStrictPrefix k) where
+  getStringModifier = fromMaybe <*> strictStrip (symbolVal (Proxy @k))
+                      where
+                        strictStrip :: String -> String -> Maybe String
+                        strictStrip pre s = do
+                          t <- stripPrefix pre s
+                          guard $ maybe True (not . isLower) $ listToMaybe t
+                          return t
 
 -- | Left-to-right (@'flip' '.'@) composition
 instance (StringModifier a, StringModifier b) => StringModifier (a, b) where
