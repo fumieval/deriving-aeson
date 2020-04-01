@@ -131,7 +131,7 @@ instance AesonOptions xs => AesonOptions (NoAllNullaryToStringTag ': xs) where
   aesonOptions = (aesonOptions @xs) { allNullaryToStringTag = False }
 
 instance (KnownSymbol t, KnownSymbol c, AesonOptions xs) => AesonOptions (SumTaggedObject t c ': xs) where
-  aesonOptions = (aesonOptions @xs) { sumEncoding = TaggedObject (symbolVal (Proxy @ t)) (symbolVal (Proxy @ t)) }
+  aesonOptions = (aesonOptions @xs) { sumEncoding = TaggedObject (symbolVal (Proxy @ t)) (symbolVal (Proxy @ c)) }
 
 instance (AesonOptions xs) => AesonOptions (SumUntaggedValue ': xs) where
   aesonOptions = (aesonOptions @xs) { sumEncoding = UntaggedValue }
