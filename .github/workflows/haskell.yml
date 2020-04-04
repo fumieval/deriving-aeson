@@ -5,13 +5,13 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-haskell@v1
+    - uses: haskell-CI/setup@master
       with:
-        ghc-version: '8.6.5'
+        ghc-version: '8.8.3'
         cabal-version: '3.0'
 
     - name: cabal Cache
