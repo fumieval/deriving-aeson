@@ -72,6 +72,7 @@ data TagSingleConstructors
 -- | the encoding will always follow the 'sumEncoding'.
 data NoAllNullaryToStringTag
 
+-- | Unpack single-field records
 data UnwrapUnaryRecords
 
 -- | Strip prefix @t@. If it doesn't have the prefix, keep it as-is.
@@ -100,9 +101,16 @@ instance StringModifier CamelToKebab where
 instance StringModifier CamelToSnake where
   getStringModifier = camelTo2 '_'
 
+-- | @{ "tag": t, "content": c}@
 data SumTaggedObject t c
+
+-- | @CONTENT@
 data SumUntaggedValue
+
+-- | @{ TAG: CONTENT }@
 data SumObjectWithSingleField
+
+-- | @[TAG, CONTENT]@
 data SumTwoElemArray
 
 -- | Reify 'Options' from a type-level list

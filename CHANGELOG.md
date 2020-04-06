@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.3
+
+* Fixed a bug in `SumTaggedObject`
+
 ## 0.2.2
 
 * Added `UnwrapUnaryRecords`
