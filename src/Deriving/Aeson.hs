@@ -15,6 +15,7 @@ module Deriving.Aeson
   , FieldLabelModifier
   , ConstructorTagModifier
   , OmitNothingFields
+  , RejectUnknownFields
   , TagSingleConstructors
   , NoAllNullaryToStringTag
   , UnwrapUnaryRecords
@@ -37,6 +38,7 @@ module Deriving.Aeson
   )where
 
 import Data.Aeson
+import Data.Aeson.Types
 import Data.Coerce
 import Data.List (stripPrefix)
 import Data.Maybe (fromMaybe)
@@ -65,6 +67,9 @@ data ConstructorTagModifier t
 
 -- | Record fields with a Nothing value will be omitted from the resulting object.
 data OmitNothingFields
+
+-- | JSON Documents mapped to records with unmatched keys will be rejected
+data RejectUnknownFields
 
 -- | Encode types with a single constructor as sums, so that allNullaryToStringTag and sumEncoding apply.
 data TagSingleConstructors
@@ -125,6 +130,9 @@ instance AesonOptions xs => AesonOptions (UnwrapUnaryRecords ': xs) where
 
 instance AesonOptions xs => AesonOptions (OmitNothingFields ': xs) where
   aesonOptions = (aesonOptions @xs) { omitNothingFields = True }
+
+instance AesonOptions xs => AesonOptions (RejectUnknownFields ': xs) where
+  aesonOptions = (aesonOptions @xs) { rejectUnknownFields = True }
 
 instance (StringModifier f, AesonOptions xs) => AesonOptions (FieldLabelModifier f ': xs) where
   aesonOptions = (aesonOptions @xs) { fieldLabelModifier = getStringModifier @f }
