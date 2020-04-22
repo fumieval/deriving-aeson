@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.4
+
+* Added `RejectUnknownFields`
+
 ## 0.2.3
 
 * Fixed a bug in `SumTaggedObject`
