@@ -3,6 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE AllowAmbiguousTypes #-}
@@ -26,6 +27,7 @@ module Deriving.Aeson
   , SumTwoElemArray
   -- * Name modifiers
   , StripPrefix
+  , CamelTo
   , CamelToKebab
   , CamelToSnake
   -- * Interface
@@ -40,6 +42,7 @@ module Deriving.Aeson
 import Data.Aeson
 import Data.Aeson.Types
 import Data.Coerce
+import Data.Kind
 import Data.List (stripPrefix)
 import Data.Maybe (fromMaybe)
 import Data.Proxy
@@ -83,11 +86,14 @@ data UnwrapUnaryRecords
 -- | Strip prefix @t@. If it doesn't have the prefix, keep it as-is.
 data StripPrefix t
 
+-- | Generic CamelTo constructor taking in a separator char
+data CamelTo (separator :: Symbol)
+
 -- | CamelCase to snake_case
-data CamelToSnake
+type CamelToSnake = CamelTo "_"
 
 -- | CamelCase to kebab-case
-data CamelToKebab
+type CamelToKebab = CamelTo "-"
 
 -- | Reify a function which modifies names
 class StringModifier t where
@@ -100,11 +106,14 @@ instance KnownSymbol k => StringModifier (StripPrefix k) where
 instance (StringModifier a, StringModifier b) => StringModifier (a, b) where
   getStringModifier = getStringModifier @b . getStringModifier @a
 
-instance StringModifier CamelToKebab where
-  getStringModifier = camelTo2 '-'
+instance (KnownSymbol separator, NonEmptyString separator) => StringModifier (CamelTo separator) where
+  getStringModifier = camelTo2 char
+    where
+      (char : _) = symbolVal (Proxy @separator)
 
-instance StringModifier CamelToSnake where
-  getStringModifier = camelTo2 '_'
+type family NonEmptyString (xs :: Symbol) :: Constraint where
+  NonEmptyString "" = TypeError ('Text "Empty string separator provided for camelTo separator")
+  NonEmptyString _  = ()
 
 -- | @{ "tag": t, "content": c}@
 data SumTaggedObject t c

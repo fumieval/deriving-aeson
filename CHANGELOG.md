@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.5
+
+* Added a generic `CamelTo` constructor
+
 ## 0.2.4
 
 * Added `RejectUnknownFields`
