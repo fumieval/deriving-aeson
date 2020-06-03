@@ -165,4 +165,4 @@ instance (AesonOptions xs) => AesonOptions (SumObjectWithSingleField ': xs) wher
   aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
 
 instance (AesonOptions xs) => AesonOptions (SumTwoElemArray ': xs) where
-  aesonOptions = (aesonOptions @xs) { sumEncoding = ObjectWithSingleField }
+  aesonOptions = (aesonOptions @xs) { sumEncoding = TwoElemArray }

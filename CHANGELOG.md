@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.6
+
+* Fixed the bug making `SumTwoElemArray` point `ObjectWithSingleField`
+
 ## 0.2.5
 
 * Added a generic `CamelTo` constructor
