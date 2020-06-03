@@ -106,6 +106,14 @@ instance KnownSymbol k => StringModifier (StripPrefix k) where
 instance (StringModifier a, StringModifier b) => StringModifier (a, b) where
   getStringModifier = getStringModifier @b . getStringModifier @a
 
+-- | Left-to-right (@'flip' '.'@) composition
+instance (StringModifier a, StringModifier b, StringModifier c) => StringModifier (a, b, c) where
+  getStringModifier = getStringModifier @c . getStringModifier @b . getStringModifier @a
+
+-- | Left-to-right (@'flip' '.'@) composition
+instance (StringModifier a, StringModifier b, StringModifier c, StringModifier d) => StringModifier (a, b, c, d) where
+  getStringModifier = getStringModifier @d . getStringModifier @c . getStringModifier @b . getStringModifier @a
+
 instance (KnownSymbol separator, NonEmptyString separator) => StringModifier (CamelTo separator) where
   getStringModifier = camelTo2 char
     where

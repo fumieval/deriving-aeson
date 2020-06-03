@@ -2,6 +2,7 @@
 
 ## 0.2.6
 
+* Added `StringModifier` instances to 3 and 4-tuples
 * Fixed the bug making `SumTwoElemArray` point `ObjectWithSingleField`
 
 ## 0.2.5
