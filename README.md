@@ -23,7 +23,7 @@ data User = User
   , userAPIToken :: Maybe String
   } deriving Generic
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[OmitNothingFields, FieldLabelModifier (StripPrefix "user", CamelToSnake)] User
+  via CustomJSON '[OmitNothingFields, FieldLabelModifier '[StripPrefix "user", CamelToSnake]] User
 
 testData :: [User]
 testData = [User 42 "Alice" Nothing, User 43 "Bob" (Just "xyz")]
@@ -36,7 +36,7 @@ main = BL.putStrLn $ encode testData
 
 * `Prefixed str` = `CustomJSON '[FieldLabelModifier (StripPrefix str)]`
 * `PrefixedSnake str` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
-* `Snake` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
+* `Snake` = `CustomJSON '[FieldLabelModifier '[StripPrefix str, CamelToSnake]]`
 * `Vanilla` = `CustomJSON '[]`
 
 How it works

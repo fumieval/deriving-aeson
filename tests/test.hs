@@ -14,7 +14,7 @@ data User = User
   , userAPIToken :: Maybe String
   } deriving Generic
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[OmitNothingFields, FieldLabelModifier (StripPrefix "user", CamelToSnake)] User
+  via CustomJSON '[OmitNothingFields, FieldLabelModifier '[StripPrefix "user", CamelToSnake]] User
 
 data Foo = Foo { fooFoo :: Int, fooBar :: Int }
   deriving Generic
