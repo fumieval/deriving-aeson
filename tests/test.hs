@@ -12,9 +12,12 @@ data User = User
   { userId :: Int
   , userName :: String
   , userAPIToken :: Maybe String
+  , userType :: String
   } deriving Generic
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[OmitNothingFields, FieldLabelModifier '[StripPrefix "user", CamelToSnake]] User
+  via CustomJSON '[ OmitNothingFields
+                  , FieldLabelModifier '[StripPrefix "user", CamelToSnake, Rename "type" "user_type"]
+                  ] User
 
 data Foo = Foo { fooFoo :: Int, fooBar :: Int }
   deriving Generic
@@ -22,7 +25,7 @@ data Foo = Foo { fooFoo :: Int, fooBar :: Int }
   via Prefixed "foo" Foo
 
 testData :: [User]
-testData = [User 42 "Alice" Nothing, User 43 "Bob" (Just "xyz")]
+testData = [User 42 "Alice" Nothing "human", User 43 "Bob" (Just "xyz") "bot"]
 
 main = do
   BL.putStrLn $ encode testData
