@@ -30,6 +30,7 @@ module Deriving.Aeson
   , CamelTo
   , CamelToKebab
   , CamelToSnake
+  , Rename
   -- * Interface
   , AesonOptions(..)
   , StringModifier(..)
@@ -95,6 +96,9 @@ type CamelToSnake = CamelTo "_"
 -- | CamelCase to kebab-case
 type CamelToKebab = CamelTo "-"
 
+-- | Rename fields called @from@ to @to@.
+data Rename (from :: Symbol) (to :: Symbol)
+
 -- | Reify a function which modifies names
 class StringModifier t where
   getStringModifier :: String -> String
@@ -125,6 +129,9 @@ instance (KnownSymbol separator, NonEmptyString separator) => StringModifier (Ca
   getStringModifier = camelTo2 char
     where
       (char : _) = symbolVal (Proxy @separator)
+
+instance (KnownSymbol from, KnownSymbol to) => StringModifier (Rename from to) where
+  getStringModifier s = if s == symbolVal (Proxy @from) then symbolVal (Proxy @to) else s
 
 type family NonEmptyString (xs :: Symbol) :: Constraint where
   NonEmptyString "" = TypeError ('Text "Empty string separator provided for camelTo separator")
