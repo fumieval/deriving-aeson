@@ -102,6 +102,13 @@ class StringModifier t where
 instance KnownSymbol k => StringModifier (StripPrefix k) where
   getStringModifier = fromMaybe <*> stripPrefix (symbolVal (Proxy @k))
 
+instance StringModifier '[] where
+  getStringModifier = id
+
+-- | Left-to-right (@'foldr' ('flip' ('.')) 'id'@) composition
+instance (StringModifier a, StringModifier as) => StringModifier (a ': as) where
+  getStringModifier = getStringModifier @as . getStringModifier @a
+
 -- | Left-to-right (@'flip' '.'@) composition
 instance (StringModifier a, StringModifier b) => StringModifier (a, b) where
   getStringModifier = getStringModifier @b . getStringModifier @a
