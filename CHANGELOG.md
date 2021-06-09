@@ -1,5 +1,10 @@
 # Revision history for deriving-aeson
 
+## 0.2.7
+
+* Added a `StringModifier` instance to a list of types
+* Added `Rename :: Symbol -> Symbol -> Type`
+
 ## 0.2.6
 
 * Added `StringModifier` instances to 3 and 4-tuples
