@@ -12,6 +12,7 @@ module Deriving.Aeson.Stock
   , ToJSON
   , Generic) where
 
+import Data.Kind (Type)
 import Deriving.Aeson
 
 -- | Field names are prefixed by @str@; strip them from JSON representation
@@ -24,4 +25,4 @@ type PrefixedSnake str = CustomJSON '[FieldLabelModifier '[StripPrefix str, Came
 type Snake = CustomJSON '[FieldLabelModifier CamelToSnake]
 
 -- | No customisation
-type Vanilla = CustomJSON '[]
+type Vanilla = CustomJSON ('[] :: [Type])
