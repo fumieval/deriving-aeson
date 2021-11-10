@@ -1,5 +1,10 @@
 # Revision history for deriving-aeson
 
+## 0.2.8
+
+* Supported GHC 9.2
+* Supported aeson-2.0
+
 ## 0.2.7
 
 * Added a `StringModifier` instance to a list of types

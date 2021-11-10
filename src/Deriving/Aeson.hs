@@ -128,7 +128,9 @@ instance (StringModifier a, StringModifier b, StringModifier c, StringModifier d
 instance (KnownSymbol separator, NonEmptyString separator) => StringModifier (CamelTo separator) where
   getStringModifier = camelTo2 char
     where
-      (char : _) = symbolVal (Proxy @separator)
+      char = case symbolVal (Proxy @separator) of
+        c : _ -> c
+        _ -> error "Impossible"
 
 instance (KnownSymbol from, KnownSymbol to) => StringModifier (Rename from to) where
   getStringModifier s = if s == symbolVal (Proxy @from) then symbolVal (Proxy @to) else s
