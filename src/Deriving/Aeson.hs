@@ -41,7 +41,6 @@ module Deriving.Aeson
   )where
 
 import Data.Aeson
-import Data.Aeson.Types
 import Data.Coerce
 import Data.Kind
 import Data.List (stripPrefix)
