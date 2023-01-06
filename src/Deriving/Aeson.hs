@@ -167,10 +167,12 @@ instance AesonOptions xs => AesonOptions (RejectUnknownFields ': xs) where
   aesonOptions = (aesonOptions @xs) { rejectUnknownFields = True }
 
 instance (StringModifier f, AesonOptions xs) => AesonOptions (FieldLabelModifier f ': xs) where
-  aesonOptions = (aesonOptions @xs) { fieldLabelModifier = getStringModifier @f }
+  aesonOptions = let next = aesonOptions @xs in
+    next { fieldLabelModifier = fieldLabelModifier next . getStringModifier @f }
 
 instance (StringModifier f, AesonOptions xs) => AesonOptions (ConstructorTagModifier f ': xs) where
-  aesonOptions = (aesonOptions @xs) { constructorTagModifier = getStringModifier @f }
+  aesonOptions = let next = aesonOptions @xs in
+    next { constructorTagModifier = constructorTagModifier next . getStringModifier @f }
 
 instance AesonOptions xs => AesonOptions (TagSingleConstructors ': xs) where
   aesonOptions = (aesonOptions @xs) { tagSingleConstructors = True }
