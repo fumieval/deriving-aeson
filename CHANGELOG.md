@@ -1,5 +1,7 @@
 # Revision history for deriving-aeson
 
+* Fixed a bug in chaining `ConstructorTagModifier` & `FieldLabelModifier`
+
 ## 0.2.8
 
 * Supported GHC 9.2
