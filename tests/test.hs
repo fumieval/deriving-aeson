@@ -26,6 +26,10 @@ data Foo = Foo { fooFoo :: Int, fooBar :: Int }
   deriving (FromJSON, ToJSON)
   via Prefixed "foo" Foo
 
+data Something = Something { somethingKun :: Int, somethingElseKun :: Int }
+  deriving Generic
+  deriving (FromJSON, ToJSON) via Suffixed "Kun" Something
+
 testData :: [User]
 testData = [User 42 "Alice" Nothing "human", User 43 "Bob" (Just "xyz") "bot"]
 
@@ -57,6 +61,7 @@ data MultipleFieldRenames = MultipleFieldRenames
 main = do
   BL.putStrLn $ encode testData
   BL.putStrLn $ encode $ Foo 0 1
+  BL.putStrLn $ encode $ Something 0 1
 
   assertEq
     (toJSON RenamedCtorOptA)

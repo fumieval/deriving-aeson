@@ -36,6 +36,8 @@ main = BL.putStrLn $ encode testData
 
 * `Prefixed str` = `CustomJSON '[FieldLabelModifier (StripPrefix str)]`
 * `PrefixedSnake str` = `CustomJSON '[FieldLabelModifier (StripPrefix str, CamelToSnake)]`
+* `Suffixed str` = `CustomJSON '[FieldLabelModifier (StripSuffix str)]`
+* `SuffixedSnake str` = `CustomJSON '[FieldLabelModifier (StripSuffix str, CamelToSnake)]`
 * `Snake` = `CustomJSON '[FieldLabelModifier '[StripPrefix str, CamelToSnake]]`
 * `Vanilla` = `CustomJSON '[]`
 

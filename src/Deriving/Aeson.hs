@@ -1,12 +1,12 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE AllowAmbiguousTypes #-}
+{-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
 --------------------
 -- | Type-directed aeson instance CustomJSONisation
@@ -27,6 +27,7 @@ module Deriving.Aeson
   , SumTwoElemArray
   -- * Name modifiers
   , StripPrefix
+  , StripSuffix
   , CamelTo
   , CamelToKebab
   , CamelToSnake
@@ -38,7 +39,7 @@ module Deriving.Aeson
   , FromJSON
   , ToJSON
   , Generic
-  )where
+  ) where
 
 import Data.Aeson
 import Data.Coerce
@@ -86,6 +87,9 @@ data UnwrapUnaryRecords
 -- | Strip prefix @t@. If it doesn't have the prefix, keep it as-is.
 data StripPrefix t
 
+-- | Strip suffix @t@. If it doesn't have the suffix, keep it as-is.
+data StripSuffix t
+
 -- | Generic CamelTo constructor taking in a separator char
 data CamelTo (separator :: Symbol)
 
@@ -104,6 +108,12 @@ class StringModifier t where
 
 instance KnownSymbol k => StringModifier (StripPrefix k) where
   getStringModifier = fromMaybe <*> stripPrefix (symbolVal (Proxy @k))
+
+stripSuffix :: Eq a => [a] -> [a] -> Maybe [a]
+stripSuffix a b = reverse <$> stripPrefix (reverse a) (reverse b)
+
+instance KnownSymbol k => StringModifier (StripSuffix k) where
+  getStringModifier = fromMaybe <*> stripSuffix (symbolVal (Proxy @k))
 
 instance StringModifier '[] where
   getStringModifier = id
