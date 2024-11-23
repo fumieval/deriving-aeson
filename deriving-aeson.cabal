@@ -1,6 +1,6 @@
 cabal-version:       2.4
 name:                deriving-aeson
-version:             0.2.9
+version:             0.2.10
 synopsis:            Type driven generic aeson instance customisation
 description:         This package provides a newtype wrapper with
   FromJSON/ToJSON instances customisable via a phantom type parameter.

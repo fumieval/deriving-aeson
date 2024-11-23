@@ -1,5 +1,9 @@
 # Revision history for deriving-aeson
 
+## 0.2.10
+
+* Added `StripSuffix`
+
 ## 0.2.9
 
 * Fixed a bug in chaining `ConstructorTagModifier` & `FieldLabelModifier`
